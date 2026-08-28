@@ -1,17 +1,16 @@
-# my_first_app
+# Laporan Praktikum Minggu-1
 
-A new Flutter project.
+# Mini assignment
 
-## Getting Started
+Buat aplikasi Profil Mahasiswa berdasarkan praktikum. Tambahkan NIM dan satu informasi tambahan menggunakan widget dasar. Push hasil ke repository portfolio sesuai struktur yang ditentukan. Sertakan screenshot dan penjelasan singkat atas satu kendala setup yang Anda temui.
 
-This project is a starting point for a Flutter application.
+# Refleksi
 
-A few resources to get you started if this is your first Flutter project:
+## Kapan native lebih tepat dipilih daripada cross-platform?
+Native lebih pas dipilih kalau aplikasi butuh performa super kencang atau akses fitur hardware khusus yang belum didukung library cross-platform.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Bagaimana perubahan state berhubungan dengan widget tree dan UI deklaratif?
+Begitu ada perubahan state, sistem langsung rebuild bagian widget tree yang terdampak supaya tampilan UI selalu menyesuaikan data terbaru.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Mengapa commit kecil dengan pesan jelas bermanfaat bagi pekerjaan tim dan portfolio?
+Commit kecil dan rapi bikin tim makin gampang melacak bug, sekaligus bikin riwayat GitHub kamu kelihatan tertata dan profesional di mata recruiter.
