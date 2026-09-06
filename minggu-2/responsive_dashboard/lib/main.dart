@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+const double kWideBreakpoint = 700.0;
+
 void main() => runApp(const DashboardApp());
 
 class DashboardApp extends StatefulWidget {
@@ -17,17 +19,19 @@ class _DashboardAppState extends State<DashboardApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Academic Overview',
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.indigo,
+        brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
         colorSchemeSeed: Colors.indigo,
+        brightness: Brightness.dark,
       ),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home: DashboardPage(
+      home: AcademicOverviewPage(
         isDark: isDark,
         onDarkChanged: (value) => setState(() => isDark = value),
       ),
@@ -35,8 +39,8 @@ class _DashboardAppState extends State<DashboardApp> {
   }
 }
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({
+class AcademicOverviewPage extends StatelessWidget {
+  const AcademicOverviewPage({
     required this.isDark,
     required this.onDarkChanged,
     super.key,
@@ -49,16 +53,14 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student Dashboard'),
+        title: const Text('Academic Overview'),
         actions: [
           Row(
             children: [
-              // 1. ExcludeSemantics: Sembunyikan ikon dekoratif agar tidak dibaca ganda
               ExcludeSemantics(
                 child: Icon(isDark ? Icons.dark_mode : Icons.light_mode),
               ),
               const SizedBox(width: 4),
-              // 2. Semantics: Memberikan label, status toggled, dan petunjuk aksi pada saklar
               Semantics(
                 label: 'Saklar Mode Gelap',
                 hint: isDark
@@ -77,66 +79,96 @@ class DashboardPage extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final crossAxisCount = constraints.maxWidth >= 960
-              ? 4
-              : constraints.maxWidth >= 600
-                  ? 2
-                  : 1;
+          final isWide = constraints.maxWidth >= kWideBreakpoint;
 
-          final childAspectRatio = constraints.maxWidth >= 960
-              ? 2.8
-              : constraints.maxWidth >= 600
-                  ? 2.2
-                  : 1.7;
-
-          return GridView.count(
-            padding: const EdgeInsets.all(16),
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: childAspectRatio,
-            children: const [
-              DashboardCard(
-                title: 'Total Students',
-                value: '1,248',
-                semanticValue: '1248 siswa',
-              ),
-              DashboardCard(
-                title: 'Present Today',
-                value: '982',
-                semanticValue: '982 siswa hadir hari ini',
-              ),
-              DashboardCard(
-                title: 'Absent',
-                value: '143',
-                semanticValue: '143 siswa tidak hadir',
-              ),
-              DashboardCard(
-                title: 'Avg. Score',
-                value: '87.4%',
-                semanticValue: '87 koma 4 persen',
-              ),
-              DashboardCard(
-                title: 'Classrooms',
-                value: '18',
-                semanticValue: '18 ruang kelas',
-              ),
-              DashboardCard(
-                title: 'Teachers',
-                value: '42',
-                semanticValue: '42 guru',
-              ),
-              DashboardCard(
-                title: 'Assignments',
-                value: '64',
-                semanticValue: '64 tugas',
-              ),
-              DashboardCard(
-                title: 'Completed',
-                value: '51',
-                semanticValue: '51 selesai',
-              ),
-            ],
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ProfileHeader(),
+                const SizedBox(height: 20),
+                Text(
+                  'Ringkasan Akademik',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 12),
+                if (isWide)
+                  const Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InfoCard(
+                              title: 'IPK Kumulatif',
+                              value: '3.85',
+                              semanticValue: '3 koma 85',
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Expanded(
+                            child: InfoCard(
+                              title: 'Total SKS',
+                              value: '68 SKS',
+                              semanticValue: '68 S K S',
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InfoCard(
+                              title: 'Kehadiran',
+                              value: '95%',
+                              semanticValue: '95 persen',
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Expanded(
+                            child: InfoCard(
+                              title: 'Tugas Selesai',
+                              value: '12/12',
+                              semanticValue: '12 dari 12 tugas selesai',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                else
+                  const Column(
+                    children: [
+                      InfoCard(
+                        title: 'IPK Kumulatif',
+                        value: '3.85',
+                        semanticValue: '3 koma 85',
+                      ),
+                      SizedBox(height: 12),
+                      InfoCard(
+                        title: 'Total SKS',
+                        value: '68 SKS',
+                        semanticValue: '68 S K S',
+                      ),
+                      SizedBox(height: 12),
+                      InfoCard(
+                        title: 'Kehadiran',
+                        value: '95%',
+                        semanticValue: '95 persen',
+                      ),
+                      SizedBox(height: 12),
+                      InfoCard(
+                        title: 'Tugas Selesai',
+                        value: '12/12',
+                        semanticValue: '12 dari 12 tugas selesai',
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           );
         },
       ),
@@ -144,8 +176,64 @@ class DashboardPage extends StatelessWidget {
   }
 }
 
-class DashboardCard extends StatelessWidget {
-  const DashboardCard({
+/// Header Profil Murid
+class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: theme.colorScheme.primary,
+            child: Text(
+              'M',
+              style: TextStyle(
+                fontSize: 24,
+                color: theme.colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Mahasiswa Teknik Informatika',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'NIM: 244107020197 • Semester 5',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InfoCard extends StatelessWidget {
+  const InfoCard({
     required this.title,
     required this.value,
     this.semanticValue,
@@ -158,26 +246,33 @@ class DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 3. Semantics + MergeSemantics pada Kartu:
-    // Menggabungkan teks judul dan nilai agar dibaca sebagai satu kesatuan kalimat.
+    final theme = Theme.of(context);
+
     return Semantics(
       container: true,
-      label: 'Statistik $title',
+      label: 'Informasi $title',
       value: semanticValue ?? value,
       child: Card(
+        elevation: 1,
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20.0),
           child: Row(
             children: [
               Expanded(
-                child: Text(title),
+                child: Text(
+                  title,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
               ),
-              // 4. semanticsLabel pada Text:
-              // Mencegah bacaan simbol/angka yang kaku (misal '%' dibaca 'persen')
               Text(
                 value,
                 semanticsLabel: semanticValue ?? value,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ],
           ),
