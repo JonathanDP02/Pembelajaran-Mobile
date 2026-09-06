@@ -1,15 +1,29 @@
 # minggu-2
 
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.11.jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.11(1).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.12.jpeg)
+
 # Tugas utama
 
 Kembangkan dashboard menjadi halaman Academic Overview dengan ketentuan:
 
-Memiliki header profil dan minimal empat kartu informasi.
-Menggunakan Row, Column, Expanded, dan Container.
-Menampilkan satu kolom pada layar sempit dan dua kolom pada layar lebar.
-Menyediakan light theme dan dark theme yang tetap terbaca, dengan toggle tema (misal CupertinoSwitch atau Switch.adaptive).
-Memiliki label aksesibilitas untuk informasi atau tombol penting.
-Menyertakan screenshot layar sempit dan lebar pada folder screenshots/.
+1. Memiliki header profil dan minimal empat kartu informasi.
+2. Menggunakan Row, Column, Expanded, dan Container.
+3. Menampilkan satu kolom pada layar sempit dan dua kolom pada layar lebar.
+4. Menyediakan light theme dan dark theme yang tetap terbaca, dengan toggle tema (misal CupertinoSwitch atau Switch.adaptive).
+5. Memiliki label aksesibilitas untuk informasi atau tombol penting.
+6. Menyertakan screenshot layar sempit dan lebar pada folder screenshots/.
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.13.jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.13(1).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.12(1).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/WhatsApp%20Image%202026-09-06%20at%2021.25.12(2).jpeg)
 
 # AI Prompt Challenge
 
@@ -32,6 +46,8 @@ Versi GridView
 Kesimpulan: LayoutBuilder + Column lebih unggul untuk tata letak bervariasi karena lebih fleksibel dan ramah aksesibilitas.
 
 2. Prompt penguatan konsep:
+
+Jawaban:
 
 Expanded berfungsi memaksa anak widget mengambil sisa ruang yang tersedia di dalam widget pembatas seperti Row atau Column.
 
@@ -70,6 +86,8 @@ SingleChildScrollView(
 
 3. Verification prompt:
 
+Jawaban:
+
 Hasil Self-Audit pada Screen Sangat Kecil (< 320px):
 
 Meskipun logika LayoutBuilder sudah berpindah ke 1 kolom pada layar sempit, masih ada 2 potensi edge case (overflow) jika dijalankan pada layar ekstrem di bawah 320px (seperti HP fitur lama, layar jam tangan pintar, atau mode split-screen sempit):
@@ -97,4 +115,41 @@ Setelah tugas utama berjalan, rapikan kode Anda:
 3. Pindahkan breakpoint ke satu konstanta bernama (misal const kWideBreakpoint = 700;) agar hanya didefinisikan satu kali.
 
 4. Jalankan flutter analyze dan pastikan tidak ada error maupun warning baru.
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/mobel1.png)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3c95aa3375aefa9eb75d2328ba3ec9dce5195d28/minggu-2/responsive_dashboard/test.png)
+
+# Refleksi
+
+1. Apa perbedaan cara berpikir imperative dan declarative saat membangun UI?
+
+Jawaban:
+
+- Imperative: Mengatur cara merubah UI step-by-step secara manual.
+
+- Declarative: Cukup tentukan bentuk UI berdasarkan state (data), Flutter yang otomatis memperbarui tampilannya.
+
+2. Kapan Expanded membantu dan kapan penggunaannya justru menghasilkan layout error?
+
+Jawaban:
+
+- Membantu: Mengisi sisa ruang kosong agar UI pas dan responsif di dalam Row/Column.
+
+- Error: Digunakan di dalam scroll horizontal (ruang tanpa batas/unbounded), sehingga Flutter bingung menghitung lebarnya.
+
+3. Bagaimana breakpoint dan theme memengaruhi pengalaman pengguna?
+
+Jawaban:
+
+- Breakpoint: Menjaga UI tetap rapi dan tidak sesak di layar HP maupun tablet.
+
+- Theme: Menjaga konsistensi warna dan kenyamanan mata (seperti mode gelap saat malam).
+
+4. Apa yang Anda verifikasi dari rekomendasi AI setelah tugas inti selesai?
+
+Jawaban:
+
+Mengecek kelayakan kode dengan flutter analyze & flutter test, serta memastikan tampilan tidak overflow di emulator.
+
 
