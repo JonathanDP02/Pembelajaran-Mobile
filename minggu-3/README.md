@@ -113,3 +113,33 @@ Lakukan refactoring berikut pada aplikasi ToDo Anda, lalu commit dengan pesan ya
 
 ![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%202.png)
 
+# Tugas, refleksi, dan referensi
+
+Bangun aplikasi ToDo dengan navigasi dan Riverpod sebagai tugas minggu ini:
+
+   1. Minimal 2 halaman dengan GoRouter: daftar tugas, halaman detail/statistik.
+   2. State dikelola Riverpod (Notifier), UI menggunakan ConsumerWidget.
+   3. Tambahkan fitur simulasi asinkron dengan AsyncValue: state loading, error, dan success tampil dengan benar.
+   4. Sertakan minimal 1 unit/widget test yang lulus.
+   5. Kerjakan bagian AI Challenge dan dokumentasikan prompt, hasil AI, perbaikan, serta alasan keputusan teknis Anda.
+   6. Push ke repository portfolio pada folder 03-week-3-navigation-state-management/ dengan struktur lib/, test/, README.md, dan screenshots/. README menjelaskan tujuan, fitur utama, stack teknologi, cara menjalankan, dan hasil yang dicapai.
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%202.png)
+
+# Refleksi
+
+1. Kapan setState masih cukup, dan kapan state harus naik ke Riverpod?
+
+jawaban: setState digunakan untuk state lokal UI sementara (seperti input teks atau toggle password), sedangkan Riverpod digunakan untuk state global/aplikasi yang dibagikan antar-halaman atau memuat logika bisnis.
+
+2. Apa perbedaan context.go dan context.push, dan kapan masing-masing tepat digunakan?
+
+jawaban: context.go mengganti rute sesuai hirarki URL (cocok untuk navigasi utama/tab), sedangkan context.push menumpuk halaman baru di atas tumpukan navigasi (cocok untuk halaman detail/modal).
+
+3. Bagaimana AsyncValue mencegah bug dibanding tiga boolean terpisah?
+
+jawaban: AsyncValue mewajibkan penanganan kondisi loading, error, dan data secara eksklusif lewat .when(), sehingga mengeliminasi kondisi kombinasi boolean yang tidak valid (seperti isLoading dan isError aktif bersamaan).
+
+4. Bagian mana dari hasil AI yang Anda perbaiki, dan mengapa?
+
+jawaban: Kode disesuaikan agar menggunakan properti model done (bukan isCompleted), memperbarui sintaks listener test menjadi (_, _) agar lulus flutter analyze, serta memastikan deklarasi GoRouter berada di top-level.
