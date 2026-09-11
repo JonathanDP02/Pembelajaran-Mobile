@@ -71,6 +71,8 @@ Sebelum kode diterima dan digabungkan ke dalam proyek, verifikasi berikut telah 
 
 ---
 
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%201.png)
+
 ## 3. Ringkasan Perbaikan Teknis
 
 Beberapa penyesuaian yang dilakukan pada kode hasil generat AI agar sesuai dengan *best practices*:
@@ -94,13 +96,13 @@ Lakukan refactoring berikut pada aplikasi ToDo Anda, lalu commit dengan pesan ya
    2. Ekstrak logika filter (misal tampilkan hanya yang belum selesai) menjadi Provider turunan yang membaca todoListProvider.
    3. Integrasikan aplikasi ToDo dengan GoRouter: / untuk daftar dan /stats untuk halaman statistik, tambahkan NavigationBar untuk berpindah.
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/92ab8356f7d650b00d6d2fa06faf109c4691ea63/minggu-3/WhatsApp%20Image%202026-09-10%20at%2013.48.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/WhatsApp%20Image%202026-09-11%20at%2022.50.59.jpeg)
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/92ab8356f7d650b00d6d2fa06faf109c4691ea63/minggu-3/WhatsApp%20Image%202026-09-10%20at%2013.48.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/WhatsApp%20Image%202026-09-11%20at%2022.51.00.jpeg)
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/92ab8356f7d650b00d6d2fa06faf109c4691ea63/minggu-3/WhatsApp%20Image%202026-09-10%20at%2013.48.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/WhatsApp%20Image%202026-09-11%20at%2022.51.00(1).jpeg)
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/92ab8356f7d650b00d6d2fa06faf109c4691ea63/minggu-3/WhatsApp%20Image%202026-09-10%20at%2013.48.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/WhatsApp%20Image%202026-09-11%20at%2022.51.00(2).jpeg)
 
 | No | Kriteria Verifikasi | Status | Catatan Verifikasi |
 |:---:|---|:---:|---|
@@ -109,5 +111,5 @@ Lakukan refactoring berikut pada aplikasi ToDo Anda, lalu commit dengan pesan ya
 | 3 | **UI `AsyncValue` Komprehensif** | ✅ Pass | Halaman statistik (`StatsPage`) menangani ketiga kondisi `AsyncValue` (`loading`, `error` dengan tombol *retry*, dan `data` *success*) menggunakan method `.when()`. |
 | 4 | **Analisis Kode & Testing Clear** | ✅ Pass | Eksekusi `flutter analyze` menghasilkan **0 issue/warning**, dan seluruh pengujian otomatis pada `flutter test` **lulus 100%**. |
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/92ab8356f7d650b00d6d2fa06faf109c4691ea63/minggu-3/WhatsApp%20Image%202026-09-10%20at%2013.48.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%202.png)
 
