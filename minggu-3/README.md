@@ -124,7 +124,14 @@ Bangun aplikasi ToDo dengan navigasi dan Riverpod sebagai tugas minggu ini:
    5. Kerjakan bagian AI Challenge dan dokumentasikan prompt, hasil AI, perbaikan, serta alasan keputusan teknis Anda.
    6. Push ke repository portfolio pada folder 03-week-3-navigation-state-management/ dengan struktur lib/, test/, README.md, dan screenshots/. README menjelaskan tujuan, fitur utama, stack teknologi, cara menjalankan, dan hasil yang dicapai.
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%202.png)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/fa5b6a8fb7738577ee78ea975d99d7765b99082b/minggu-3/WhatsApp%20Image%202026-09-11%20at%2023.30.52.jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/fa5b6a8fb7738577ee78ea975d99d7765b99082b/minggu-3/WhatsApp%20Image%202026-09-11%20at%2023.30.52(1).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/fa5b6a8fb7738577ee78ea975d99d7765b99082b/minggu-3/WhatsApp%20Image%202026-09-11%20at%2023.30.52(2).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/fa5b6a8fb7738577ee78ea975d99d7765b99082b/minggu-3/WhatsApp%20Image%202026-09-11%20at%2023.30.53.jpeg)
+
 
 # Refleksi
 
