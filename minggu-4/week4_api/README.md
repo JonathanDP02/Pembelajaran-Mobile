@@ -16,5 +16,11 @@ Jawaban:
 Jawaban:
 ![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3e72781144ac41aa8dc853ca2deec31bc2302691/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2012.48.28(3).jpeg)
 
+Ubah home di main.dart menjadi PagedPostPage, jalankan, dan scroll sampai bawah. Amati: halaman 1 tampil dulu, indikator muncul, data bertambah tanpa reload penuh.
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3e72781144ac41aa8dc853ca2deec31bc2302691/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2012.48.28(3).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/3e72781144ac41aa8dc853ca2deec31bc2302691/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2012.48.28(3).jpeg)
+
 
 
