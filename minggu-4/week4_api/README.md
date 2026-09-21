@@ -61,7 +61,7 @@ Ubah home di main.dart menjadi PagedPostPage, jalankan, dan scroll sampai bawah.
 
 # Refactoring dan testing
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/f9ff8619283124191305e014e25890aa24456b82/minggu-4/week4_api/fluter%20analyze%20dan%20test.png)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/4e8809f422c646fe0cf4077ef0eeccc52e002f30/minggu-4/week4_api/refactoring%20chellenge.png)
 
 ## 🔍 Checklist Verifikasi Mandiri
 
@@ -88,6 +88,10 @@ Ubah home di main.dart menjadi PagedPostPage, jalankan, dan scroll sampai bawah.
     * Seluruh rangkaian pengujian unit dan widget (`flutter test`) berhasil lulus dengan sukses menggunakan pendekatan *repository mock* palsu.
 
 ---
+
+# Tugas, refleksi, dan referensi
+
+
 
 
 
