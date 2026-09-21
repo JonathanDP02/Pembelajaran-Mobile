@@ -24,7 +24,7 @@ Ubah home di main.dart menjadi PagedPostPage, jalankan, dan scroll sampai bawah.
 
 # AI prompt challenge
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/34fbff8ea774416e8525201756f98dc03959c052/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2013.21.45.jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/f9ff8619283124191305e014e25890aa24456b82/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2013.52.18.jpeg)
 
 ## 🔍 Checklist Verifikasi & Audit Kualitas Kode
 
@@ -57,7 +57,38 @@ Ubah home di main.dart menjadi PagedPostPage, jalankan, dan scroll sampai bawah.
 
 ---
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/34fbff8ea774416e8525201756f98dc03959c052/minggu-4/week4_api/WhatsApp%20Image%202026-09-21%20at%2013.21.45.jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/f9ff8619283124191305e014e25890aa24456b82/minggu-4/week4_api/fluter%20analyze%20dan%20test.png)
+
+# Refactoring dan testing
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/f9ff8619283124191305e014e25890aa24456b82/minggu-4/week4_api/fluter%20analyze%20dan%20test.png)
+
+## 🔍 Checklist Verifikasi Mandiri
+
+* [x] **1. UI tidak memanggil Dio langsung, semua akses data lewat repository + provider.**
+  * **Status:** Terverifikasi.
+  * **Catatan:** Seluruh lapisan antarmuka (*UI*) sepenuhnya terisolasi dari *network client*. Akses pengambilan data dikelola sepenuhnya melalui *Repository* yang diinjeksikan ke dalam *Riverpod Provider* (`AsyncNotifierProvider` / *StateNotifier*).
+
+* [x] **2. Empat state tampil benar: loading, error (+ retry), empty, success.**
+  * **Status:** Terverifikasi.
+  * **Catatan:** 
+    * **Loading:** Menampilkan indikator putar (*CircularProgressIndicator*) saat data sedang diambil.
+    * **Error (+ Retry):** Menampilkan pesan kesalahan ramah pengguna menggunakan fungsi penerjemah error beserta tombol "Coba Lagi" (*Retry*).
+    * **Empty:** Menampilkan teks informasi apabila data dari server kosong.
+    * **Success:** Menampilkan daftar data (*ListView*) dengan rapi menggunakan komponen *widget* mandiri (`PostTile`).
+
+* [x] **3. Pagination: data bertambah saat scroll, tidak ada request ganda, ada indikator akhir data.**
+  * **Status:** Terverifikasi.
+  * **Catatan:** Mekanisme pemuatan halaman berikutnya (*infinite scroll*) berjalan mulus saat pengguna mencapai batas bawah daftar. Sistem penguncian mencegah terjadinya *double request* (permintaan ganda) saat proses *fetching* aktif, serta menampilkan indikator batas akhir data (*end of list*).
+
+* [x] **4. `flutter analyze` tanpa issue dan semua test lulus.**
+  * **Status:** Terverifikasi.
+  * **Catatan:** 
+    * Eksekusi perintah `flutter analyze` menghasilkan kode bersih tanpa adanya satupun peringatan (*no issues found*).
+    * Seluruh rangkaian pengujian unit dan widget (`flutter test`) berhasil lulus dengan sukses menggunakan pendekatan *repository mock* palsu.
+
+---
+
 
 
 
