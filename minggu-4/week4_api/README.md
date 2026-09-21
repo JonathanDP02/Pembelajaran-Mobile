@@ -1,17 +1,18 @@
-# week4_api
+# PERRTEMUAN 4
 
-A new Flutter project.
+# Uji tiga skenario error
+1. Jalankan aplikasi dengan internet normal, amati loading lalu daftar 100 posts.
 
-## Getting Started
+Jawaban:
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%201.png)
 
-This project is a starting point for a Flutter application.
+2. Matikan internet (mode pesawat), tekan refresh, amati pesan ramah + tombol Coba lagi. Nyalakan kembali internet, tekan Coba lagi.
 
-A few resources to get you started if this is your first Flutter project:
+Jawaban:
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%201.png)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+3. Sementara ubah baseUrl menjadi URL salah, amati pesan error koneksi. Kembalikan setelah uji.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Jawaban:
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/1a3f1b53bb609aa65828d8454fa6af10220acae1/minggu-3/flutter%20analyst%201.png)
+
