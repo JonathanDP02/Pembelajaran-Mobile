@@ -10,11 +10,11 @@ Bangun aplikasi daftar data dari REST API sebagai tugas minggu ini (kembangkan p
 6. Kerjakan bagian AI Challenge dan dokumentasikan prompt, hasil AI, perbaikan, serta alasan keputusan teknis Anda di docs/.
 7. Push ke repository portfolio pada folder 04-week-4-networking-rest-api/ dengan struktur lib/, test/, docs/, README.md, dan screenshots/. README menjelaskan tujuan, fitur utama, stack teknologi, cara menjalankan, dan hasil yang dicapai.
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/4e8809f422c646fe0cf4077ef0eeccc52e002f30/minggu-4/week4_api/refactoring%20chellenge.png)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/09540d571b9a4aa4e1f0cd8ed7d6fbb4573496ad/minggu-4/week4_tugas/WhatsApp%20Image%202026-09-21%20at%2014.29.29.jpeg)
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/4e8809f422c646fe0cf4077ef0eeccc52e002f30/minggu-4/week4_api/refactoring%20chellenge.png)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/09540d571b9a4aa4e1f0cd8ed7d6fbb4573496ad/minggu-4/week4_tugas/WhatsApp%20Image%202026-09-21%20at%2014.29.29(1).jpeg)
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/4e8809f422c646fe0cf4077ef0eeccc52e002f30/minggu-4/week4_api/refactoring%20chellenge.png)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/09540d571b9a4aa4e1f0cd8ed7d6fbb4573496ad/minggu-4/week4_tugas/WhatsApp%20Image%202026-09-21%20at%2014.29.29(2).jpeg)
 
 # Refleksi
 
