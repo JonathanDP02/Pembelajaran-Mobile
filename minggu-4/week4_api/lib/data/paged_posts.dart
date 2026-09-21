@@ -42,8 +42,6 @@ class PagedPostsNotifier extends Notifier<PagedPostsState> {
   Future<void> loadNextPage() async {
     if (state.isLoadingMore || !state.hasMore) return;
 
-    print('MEMUAT HALAMAN BERIKUTNYA: ${state.page + 1}');
-
     final repo = ref.read(postRepositoryProvider);
     final currentItems = state.items;
     final currentPage = state.page;
@@ -59,8 +57,6 @@ class PagedPostsNotifier extends Notifier<PagedPostsState> {
       final next = currentPage + 1;
       final items = await repo.fetchPostsPage(page: next, limit: 10);
       
-      print('BERHASIL DAPAT ${items.length} DATA DARI HALAMAN $next');
-      
       state = PagedPostsState(
         items: [...currentItems, ...items],
         page: next,
@@ -68,7 +64,6 @@ class PagedPostsNotifier extends Notifier<PagedPostsState> {
         hasMore: items.isNotEmpty && items.length == 10,
       );
     } catch (e) {
-      print('TERJADI ERROR SAAT LOAD NEXT: $e');
       state = PagedPostsState(
         items: currentItems,
         page: currentPage,
