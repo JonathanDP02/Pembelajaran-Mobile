@@ -4,8 +4,18 @@ import 'package:sqflite/sqflite.dart';
 import '../local/db.dart';
 import '../local/note.dart';
 
-// Provider untuk mengontrol status Force Offline secara global
-final forceOfflineProvider = StateProvider<bool>((ref) => false);
+// Provider untuk simulasi mode offline
+final forceOfflineProvider = NotifierProvider<ForceOfflineNotifier, bool>(
+  ForceOfflineNotifier.new,
+);
+
+class ForceOfflineNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void setOffline(bool value) => state = value;
+  void toggle() => state = !state;
+}
 
 // Provider untuk NoteRepository
 final noteRepositoryProvider = Provider<NoteRepository>((ref) {
@@ -59,9 +69,8 @@ class NoteRepository {
     await db.update('notes', {'dirty': 0}, where: 'dirty = 1');
   }
 
-  /// Fungsi Sinkronisasi Catatan Kotor (dirty) dengan penanganan forceOffline
+  /// Sinkronisasi data catatan kotor (dirty) dengan pemeriksaan forceOffline
   Future<int> syncNotes({bool forceOffline = false}) async {
-    // Jika forceOffline bernilai true, simulasikan kegagalan jaringan
     if (forceOffline) {
       throw Exception('Gagal sinkronisasi: Mode Offline aktif.');
     }
@@ -69,12 +78,13 @@ class NoteRepository {
     final dirtyCount = await countDirty();
     if (dirtyCount == 0) return 0;
 
-    // Simulasi upload ke REST API (1 detik delay)
+    // Simulasi delay pengiriman data ke server
     await Future.delayed(const Duration(seconds: 1));
     await markAllSynced();
     return dirtyCount;
   }
 
+  /// Membaca data cache dari tabel cached_posts (Praktikum 3)
   Future<List<Map<String, dynamic>>> readCachedPosts() async {
     final db = await _openDb();
     final rows = await db.query('cached_posts');
@@ -84,6 +94,7 @@ class NoteRepository {
     }).toList();
   }
 
+  /// Memuat data post menggunakan strategi Cache-First
   Future<List<Map<String, dynamic>>> loadPostsCacheFirst() async {
     final cached = await readCachedPosts();
     _refreshPostsInBackground();
@@ -91,6 +102,6 @@ class NoteRepository {
   }
 
   void _refreshPostsInBackground() async {
-    // Implementasi fetch API background
+    // Dipakai untuk fetch API di background jika diperlukan
   }
 }
