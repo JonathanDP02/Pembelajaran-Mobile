@@ -187,3 +187,41 @@ Bangun aplikasi Offline Notes sebagai tugas minggu ini (kembangkan project codel
 5. Sertakan minimal 2 test yang lulus (1 unit test model + 1 test provider dengan repository palsu).
 6. Kerjakan bagian AI Challenge dan dokumentasikan prompt, tabel perbandingan storage, keputusan final, serta alasan teknis Anda di docs/.
 7. Push ke repository portfolio pada folder 05-week-5-local-storage-offline-first/ dengan struktur lib/, test/, docs/, README.md, dan screenshots/. README menjelaskan tujuan, fitur utama, stack teknologi, cara menjalankan, dan hasil yang dicapai.
+
+# Refleksi
+
+- Mengapa daftar catatan tidak boleh disimpan di SharedPreferences? Apa yang rusak jika aturan ini dilanggar?
+
+Jawaban: 
+Alasan: SharedPreferences itu key-value storage sederhana berorientasi XML/Plist, bukan database untuk kumpulan (collection) data berstruktur.
+
+Yang Rusak:
+
+    Performa & Memori: Kalau maksa simpan JSON array catatan yang besar, aplikasi harus melakukan encode/decode ulang seluruh teks setiap ada perubahan kecil. Ini makan memori besar dan bikin UI lag/jank.
+
+    Integritas Data: Tidak ada fitur query, indexing, atau soft-delete. Kalau aplikasi crash pas lagi nulis JSON string berukuran besar, seluruh data catatan bisa langsung terkorupsi dan hilang.
+
+- Kapan cache-first cukup, dan kapan Anda membutuhkan strategi lain (misalnya network-first untuk data harga real-time)?
+
+Jawaban: 
+Cache-First Cukup: Cocok untuk data yang jarang berubah dan offline-priority, seperti daftar catatan pribadi, artikel bacaan, atau profil user. Fokusnya biar aplikasi langsung responsif tanpa nunggu koneksi internet.
+
+Strategi Lain (Misal Network-First): Wajib dipakai untuk data yang sifatnya critical & butuh real-time accuracy, seperti harga saham, kuota tiket/hotel, atau transaksi e-wallet. Kalau pakai cache, user bakal ngeliat data basi (stale data) yang bisa memicu kesalahan finansial atau overbooking.
+
+- Bagaimana dirty flag berubah menjadi antrean sync tanpa memblokir UI? Kapan antrean terpisah (tabel outbox) menjadi perlu?
+
+Jawaban: 
+Biar Gak Memblokir UI: Proses sync dijalanin secara asynchronous (di background thread) lewat State Management (seperti Riverpod/Bloc). UI cuma membaca status dirty, sementara proses kirim data ke server jalan di balik layar pakai Future/Stream tanpa mengganggu respon tombol atau scroll UI.
+
+Kapan Butuh Tabel Outbox Terpisah:Urutan Operasi Fleksibel: Saat 1 catatan mengalami banyak perubahan berturut-turut (misal: Create $\rightarrow$ Edit $\rightarrow$ Edit lagi $\rightarrow$ Delete) saat offline.Rincian HTTP Request: Jika kita butuh menyimpan metadata antrean yang lebih rinci, seperti tipe aksi (POST/PUT/DELETE), jumlah retries (retry count), dan payload spesifik agar urutan eksekusi ke server tidak berantakan (race condition).
+
+- Bagian mana dari rekomendasi AI yang Anda tolak, dan mengapa?
+
+Jawaban: 
+Yang Ditolak: AI sempat menyarankan penggunaan SharedPreferences untuk menyimpan data koleksi catatan dan mengklaim sqflite mendukung reaktivitas stream secara otomatis.
+
+Alasannya:
+
+    Menyimpan koleksi data di SharedPreferences berisiko tinggi merusak data dan memperlambat performa.
+
+    sqflite dasarnya adalah engine SQLite murni tanpa kemampuan reaktif bawaan (Stream). Untuk membuat UI reaktif di sqflite, kita harus membungkusnya secara manual dengan Riverpod (ref.invalidate()) atau StreamController, berbeda dengan Drift atau Hive yang memang sudah memiliki .watch() bawaan.
