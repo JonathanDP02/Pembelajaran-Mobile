@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../data/prefs.dart';
-import '../data/repositories/note_repository.dart';
 
 final prefsRepositoryProvider = Provider((ref) => PrefsRepository());
-final darkModeProvider =
-    AsyncNotifierProvider<DarkModeNotifier, bool>(DarkModeNotifier.new);
+
+final darkModeProvider = AsyncNotifierProvider<DarkModeNotifier, bool>(
+  DarkModeNotifier.new,
+);
 
 class DarkModeNotifier extends AsyncNotifier<bool> {
   @override
-  Future<bool> build() =>
-      ref.watch(prefsRepositoryProvider).getDarkMode();
+  Future<bool> build() => ref.watch(prefsRepositoryProvider).getDarkMode();
 
   Future<void> toggle() async {
     final next = !(state.value ?? false);
@@ -22,54 +23,62 @@ class DarkModeNotifier extends AsyncNotifier<bool> {
   }
 }
 
-class SettingsPage extends ConsumerWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final darkModeAsync = ref.watch(darkModeProvider);
-    final isForceOffline = ref.watch(forceOfflineProvider);
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends ConsumerState<SettingsPage> {
+  String? _lastOpened;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLastOpened();
+  }
+
+  Future<void> _loadLastOpened() async {
+    final prefs = ref.read(prefsRepositoryProvider);
+
+    await prefs.markOpenedNow();
+
+    final value = await prefs.getLastOpened();
+
+    if (!mounted) return;
+
+    setState(() {
+      _lastOpened = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final darkMode = ref.watch(darkModeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pengaturan'),
-      ),
-      body: ListView(
-        children: [
-          // Pengaturan Mode Gelap (SharedPreferences)
-          darkModeAsync.when(
-            data: (isDark) => SwitchListTile(
+      appBar: AppBar(title: const Text('Pengaturan')),
+      body: darkMode.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text('Terjadi kesalahan: $error')),
+        data: (enabled) => Column(
+          children: [
+            SwitchListTile(
               title: const Text('Mode Gelap'),
-              subtitle: const Text('Aktifkan tema gelap aplikasi'),
-              value: isDark,
+              subtitle: const Text('Simpan preferensi tema secara lokal'),
+              value: enabled,
               onChanged: (_) {
                 ref.read(darkModeProvider.notifier).toggle();
               },
             ),
-            loading: () => const ListTile(
-              title: Text('Mode Gelap'),
-              trailing: CircularProgressIndicator(),
+            const Divider(),
+            ListTile(
+              title: const Text('Waktu terakhir dibuka'),
+              subtitle: Text(_lastOpened ?? 'Memuat...'),
             ),
-            error: (err, stack) => ListTile(
-              title: const Text('Mode Gelap'),
-              subtitle: Text('Error: $err'),
-            ),
-          ),
-          const Divider(),
-          // Toggle Force Offline untuk Demo & Pengujian Praktikum
-          SwitchListTile(
-            title: const Text('Simulasi Force Offline'),
-            subtitle: const Text('Memutus koneksi jaringan untuk testing sync'),
-            secondary: Icon(
-              isForceOffline ? Icons.wifi_off : Icons.wifi,
-              color: isForceOffline ? Colors.red : Colors.green,
-            ),
-            value: isForceOffline,
-            onChanged: (value) {
-              ref.read(forceOfflineProvider.notifier).state = value;
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

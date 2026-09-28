@@ -74,6 +74,8 @@ CREATE INDEX idx_notes_dirty ON notes(dirty);
 -- Index untuk sorting catatan berdasarkan waktu perubahan terbaru
 CREATE INDEX idx_notes_updated_at ON notes(updated_at DESC);
 
+```
+
 ## ⚖️ Analisis Trade-Off Setiap Pilihan Storage
 
 ### 1. SharedPreferences
@@ -154,3 +156,22 @@ Proses verifikasi dan audit terhadap keluaran/rekomendasi yang dihasilkan oleh A
 ### 📌 Ringkasan Keputusan Final
 * **Preferensi Tema:** Menggunakan **`SharedPreferences`** (Sederhana, *lightweight*, cukup untuk menyimpan status `isDarkMode`).
 * **Penyimpanan Catatan:** Menggunakan **`sqflite` / `Drift`** (Mendukung query terstruktur, indexing cepat untuk 1000+ catatan, dan memiliki *dirty flag* untuk arsitektur *Offline-First Sync*).
+
+# Refactoring, testing, dan error umum
+
+1. Baris catatan diekstrak menjadi NoteTile dengan badge dirty.
+2. Cache posts dan syncNotes dipindahkan ke lib/data/sync.dart.
+3. Halaman detail NoteDetailPage membaca ulang catatan dari repository lokal melalui provider family, bukan memakai object dari state halaman list.
+4. Routing didefinisikan dengan GoRouter: /, /note/:id, dan /settings.
+
+# Testing
+test/note_test.dart menguji:
+- Note.fromMap() aman ketika field map hilang;
+- flag dirty bertahan setelah serialisasi dan deserialisasi;
+- provider berhasil mengambil data dari FakeNoteRepository tanpa SQLite.
+
+test/widget_test.dart menguji badge Belum tersinkron pada NoteTile.
+
+hasil akhir:
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.38(1).jpeg)

@@ -1,82 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:week5_offline_notes/pages/note_page.dart';
+import 'package:go_router/go_router.dart';
+
+import 'data/prefs.dart';
+import 'pages/note_detail_page.dart';
 import 'pages/note_page.dart';
 import 'pages/settings_page.dart';
 
-void main() {
-  runApp(
-    // Wajib membungkus seluruh aplikasi dengan ProviderScope agar Riverpod berjalan
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrefsRepository().markOpenedNow();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
+  static final _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const NotesPage(),
+      ),
+      GoRoute(
+        path: '/note/:id',
+        builder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '');
+          if (id == null) {
+            return const Scaffold(
+              body: Center(child: Text('ID catatan tidak valid')),
+            );
+          }
+          return NoteDetailPage(noteId: id);
+        },
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsPage(),
+      ),
+    ],
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Memantau state dark mode dari DarkModeNotifier (Praktikum 1)
-    final darkModeAsync = ref.watch(darkModeProvider);
+    final darkMode = ref.watch(darkModeProvider).value ?? false;
 
-    return MaterialApp(
-      title: 'Offline Notes',
-      debugShowCheckedModeBanner: false,
-      // Mengatur tema terang dan gelap
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: darkModeAsync.when(
-        data: (isDark) => isDark ? ThemeMode.dark : ThemeMode.light,
-        loading: () => ThemeMode.system,
-        error: (_, __) => ThemeMode.system,
+    return MaterialApp.router(
+      title: 'Week 5 - Offline Notes',
+      theme: ThemeData(
+        colorSchemeSeed: Colors.indigo,
+        brightness: Brightness.light,
+        useMaterial3: true,
       ),
-      home: const MainNavigationPage(),
-    );
-  }
-}
-
-// Halaman navigasi sederhana untuk berpindah antara NotesPage dan SettingsPage
-class MainNavigationPage extends StatefulWidget {
-  const MainNavigationPage({super.key});
-
-  @override
-  State<MainNavigationPage> createState() => _MainNavigationPageState();
-}
-
-class _MainNavigationPageState extends State<MainNavigationPage> {
-  int _currentIndex = 0;
-
-final List<Widget> _pages = [
-  const NotesPage(),
-  const SettingsPage(),
-];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.note_outlined),
-            selectedIcon: Icon(Icons.note),
-            label: 'Catatan',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Pengaturan',
-          ),
-        ],
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.indigo,
+        brightness: Brightness.dark,
+        useMaterial3: true,
       ),
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+      routerConfig: _router,
     );
   }
 }
