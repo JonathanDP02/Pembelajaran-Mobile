@@ -6,4 +6,10 @@
 - Nyalakan kembali koneksi, jalankan syncNotes: badge kembali ke 0.
 - Tuliskan langkah dan hasil observasi Anda (screenshot sebelum/sesudah) ke folder screenshots/.
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/09540d571b9a4aa4e1f0cd8ed7d6fbb4573496ad/minggu-4/week4_tugas/WhatsApp%20Image%202026-09-21%20at%2014.29.29.jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.38.jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.37.jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.37(1).jpeg)
+
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.38(1).jpeg)
