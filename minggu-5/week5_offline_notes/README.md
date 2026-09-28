@@ -175,3 +175,15 @@ test/widget_test.dart menguji badge Belum tersinkron pada NoteTile.
 hasil akhir:
 
 ![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/0174c9d01b88e741c7ed894dcb58d6295453366d/minggu-5/week5_offline_notes/flutter%20tes%20anallssss.png)
+
+# Tugas, refleksi, dan referensi
+
+Bangun aplikasi Offline Notes sebagai tugas minggu ini (kembangkan project codelab atau buat baru):
+
+1. Preferensi: toggle tema gelap/terang + waktu terakhir dibuka via SharedPreferences.
+2. CRUD catatan persisten via SQLite (sqflite) melalui repository lokal + Riverpod; daftar diurutkan updated_at terbaru.
+3. Offline-first: cache-first untuk data bacaan, dirty flag + syncNotes untuk tulisan, dan aturan konflik eksplisit yang didokumentasikan.
+4. Buktikan mode pesawat: screenshot daftar catatan saat offline dan badge dirty sebelum/sesudah sync.
+5. Sertakan minimal 2 test yang lulus (1 unit test model + 1 test provider dengan repository palsu).
+6. Kerjakan bagian AI Challenge dan dokumentasikan prompt, tabel perbandingan storage, keputusan final, serta alasan teknis Anda di docs/.
+7. Push ke repository portfolio pada folder 05-week-5-local-storage-offline-first/ dengan struktur lib/, test/, docs/, README.md, dan screenshots/. README menjelaskan tujuan, fitur utama, stack teknologi, cara menjalankan, dan hasil yang dicapai.
