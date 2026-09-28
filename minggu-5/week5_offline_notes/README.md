@@ -174,4 +174,4 @@ test/widget_test.dart menguji badge Belum tersinkron pada NoteTile.
 
 hasil akhir:
 
-![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/30d3792d4c77b76bf6e2be6bbe36e29f3fffa132/minggu-5/week5_offline_notes/WhatsApp%20Image%202026-09-28%20at%2021.34.38(1).jpeg)
+![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/0174c9d01b88e741c7ed894dcb58d6295453366d/minggu-5/week5_offline_notes/flutter%20tes%20anallssss.png)
