@@ -137,3 +137,20 @@ perangkat nyata/emulator dengan konfigurasi Firebase yang benar.
 - flutter analyze bersih dan semua test lulus.
 
 ![image alt](https://github.com/JonathanDP02/Pembelajaran-Mobile/blob/0211cdb8f1c47981d2f2623ac128fdcce9520a6d/minggu-6/campus_notify/campus_notify.png)
+
+# Tugas, refleksi, dan referensi
+
+1. Mengapa refresh token tidak boleh disimpan di SharedPreferences? Apa risikonya bila bocor?
+2. Apa yang rusak bila onTokenRefresh diabaikan selama satu semester perkuliahan?
+3. Kapan memakai topik dan kapan memakai token perangkat? Beri contoh pesan kampus untuk masing-masing.
+4. Bagian mana dari draf AI yang Anda tolak atau perbaiki, dan mengapa?
+
+Jawaban:
+
+1. SharedPreferences menyimpan data secara plain text (tanpa enkripsi) dan gampang diakses pada perangkat yang di-root. Jika refresh token bocor, peretas bisa terus-menerus meminta access token baru untuk mengambil alih akun pengguna secara permanen tanpa perlu tahu kata sandi.
+2. Aplikasi tidak akan menerima pembaruan token FCM dari server. Dampaknya, pengiriman push notification ke pengguna akan gagal total (pengguna tidak akan menerima notifikasi apa pun) karena server kampus masih mengirimkan notifikasi ke token lama yang sudah kadaluarsa/tidak valid.
+3. - Topik: Digunakan untuk pengumuman massal ke banyak pengguna sekaligus yang berlangganan grup tertentu.
+Contoh: "Pengumuman: Jadwal Libur Semester Ganjil Telah Diterbitkan."
+- Token Perangkat: Digunakan untuk notifikasi personal/spesifik ke satu pengguna/perangkat tertentu.
+Contoh: "KRS Anda untuk semester ini telah disetujui oleh Dosen Pembimbing Akademik."
+4. (Harap disesuaikan dengan draf AI yang sedang Anda tinjau). Umumnya bagian yang perlu diperbaiki meliputi penanganan keamanan yang terlalu disederhanakan (misal: menyarankan penyimpanan token secara tidak aman), penggunaan pustaka/metode FCM yang sudah deprecated, atau logika pembaharuan token yang kurang tepat pada siklus hidup (lifecycle) aplikasi.
