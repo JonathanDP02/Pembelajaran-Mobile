@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:dio/dio.dart';
 
 import 'messaging/push_service.dart';
 import 'data/api_client.dart';
@@ -25,8 +27,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
-      GoRoute(path: '/', builder: (_, __) => const HomePage()),
+      GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
+      GoRoute(path: '/', builder: (_, _) => const HomePage()),
       GoRoute(
         path: '/pengumuman/:id',
         builder: (_, s) => AnnouncementPage(id: s.pathParameters['id'] ?? ''),
@@ -37,6 +39,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage _) async {
+  // Background handlers run in a separate isolate; do not use BuildContext or Riverpod here.
   await Firebase.initializeApp();
 }
 
@@ -64,13 +67,29 @@ void listenForeground(void Function(String route) onRoute) {
 
 Future<void> handleTerminated(void Function(String route) onRoute) async {
   final message = await FirebaseMessaging.instance.getInitialMessage();
-  if (message != null) {
-    onRoute(_routeFromMessage(message));
-  }
-
-  final route = pendingDeepLink;
-  if (route != null && route.isNotEmpty) onRoute(route);
+  final route = message == null ? pendingDeepLink : _routeFromMessage(message);
   pendingDeepLink = null;
+  if (route != null && route.isNotEmpty) onRoute(route);
+}
+
+String _currentPlatformName() => switch (defaultTargetPlatform) {
+  TargetPlatform.android => 'android',
+  TargetPlatform.iOS => 'ios',
+  _ => 'unknown',
+};
+
+Future<void> _registerFcmToken(Dio dio, String token) async {
+  try {
+    await dio.post(
+      '/devices',
+      data: {'fcm_token': token, 'platform': _currentPlatformName()},
+    );
+  } on DioException catch (error) {
+    debugPrint(
+      'FCM token registration failed '
+      '(type: ${error.type}, status: ${error.response?.statusCode ?? 'none'}).',
+    );
+  }
 }
 
 void main() async {
@@ -98,17 +117,10 @@ void main() async {
       final truncatedToken = formatTokenForDebug(token);
       fcmTokenNotifier.value = truncatedToken;
 
-      print("FCM Token (Truncated): $truncatedToken");
+      debugPrint('FCM Token (Truncated): $truncatedToken');
 
       // B. [BARU - Praktikum 2/3] Kirim token FCM ke backend kampus via Dio
-      try {
-        await dio.post(
-          '/devices',
-          data: {'fcm_token': token, 'platform': 'android'},
-        );
-      } catch (_) {
-        // Abaikan error jika API mock belum siap
-      }
+      await _registerFcmToken(dio, token);
     },
   );
 

@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 final fcmTokenNotifier = ValueNotifier<String>('Memuat token...');
 
 final _local = FlutterLocalNotificationsPlugin();
+const _announcementTopic = 'pengumuman-kampus';
 const _notificationChannel = AndroidNotificationChannel(
   'pengumuman',
   'Pengumuman Kampus',
@@ -38,6 +39,8 @@ void _handleLocalNotificationResponse(NotificationResponse response) {
 }
 
 Future<bool> requestNotificationPermission() async {
+  // Android 13+ displays the POST_NOTIFICATIONS runtime prompt here.
+  // On iOS, Firebase Messaging requests alert, badge, and sound authorization.
   final settings = await FirebaseMessaging.instance.requestPermission(
     alert: true,
     badge: true,
@@ -86,15 +89,29 @@ Future<void> showForegroundNotification(RemoteMessage message) async {
     importance: Importance.high,
     priority: Priority.high,
   );
+  const iOSDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
 
   await _local.show(
     id: message.hashCode,
     title: message.notification?.title ?? 'Pengumuman',
     body: message.notification?.body ?? '',
-    notificationDetails: const NotificationDetails(android: androidDetails),
+    notificationDetails: const NotificationDetails(
+      android: androidDetails,
+      iOS: iOSDetails,
+    ),
     payload: payload,
   );
 }
+
+Future<void> subscribeToAnnouncements() =>
+    FirebaseMessaging.instance.subscribeToTopic(_announcementTopic);
+
+Future<void> unsubscribeFromAnnouncements() =>
+    FirebaseMessaging.instance.unsubscribeFromTopic(_announcementTopic);
 
 Future<void> initFcmToken({
   required Future<void> Function(String token) onToken,
@@ -108,5 +125,5 @@ Future<void> initFcmToken({
   FirebaseMessaging.instance.onTokenRefresh.listen(onToken);
 
   // 3. Langganan topik kampus (mis. semua mahasiswa angkatan).
-  await FirebaseMessaging.instance.subscribeToTopic('pengumuman-kampus');
+  await subscribeToAnnouncements();
 }
