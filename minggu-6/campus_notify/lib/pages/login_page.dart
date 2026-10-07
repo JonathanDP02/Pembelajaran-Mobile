@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../providers/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -16,6 +17,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authStateProvider);
+    final errorMessage = ref.read(authStateProvider.notifier).errorMessage;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Login Campus Notify')),
@@ -39,18 +41,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             else
               ElevatedButton(
                 onPressed: () {
-                  ref.read(authStateProvider.notifier).login(
-                        _emailController.text,
-                        _passwordController.text,
-                      );
+                  ref
+                      .read(authStateProvider.notifier)
+                      .login(_emailController.text, _passwordController.text);
                 },
                 child: const Text('Masuk'),
               ),
-            if (authState.hasError)
+            if (errorMessage != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  '${authState.error}',
+                  errorMessage,
                   style: const TextStyle(color: Colors.red),
                 ),
               ),

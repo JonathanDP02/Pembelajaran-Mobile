@@ -11,7 +11,7 @@ class AuthRepository {
       {required String email, required String password}) async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!email.contains('@') || password.length < 6) {
-      throw Exception('Email atau kata sandi tidak valid');
+      throw const FormatException('Email atau kata sandi tidak valid');
     }
     // Simulasi JWT: header.payload.signature (jangan parse manual di produksi,
     // gunakan verifikasi server).

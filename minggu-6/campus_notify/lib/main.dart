@@ -14,6 +14,7 @@ import 'providers/auth_provider.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 import 'pages/announcement_page.dart';
+import 'routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authAsync = ref.watch(authStateProvider);
@@ -21,16 +22,16 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     redirect: (context, state) {
-      final goingLogin = state.matchedLocation == '/login';
-      if (!loggedIn && !goingLogin) return '/login';
-      if (loggedIn && goingLogin) return '/';
+      final goingLogin = state.matchedLocation == AppRoutes.login;
+      if (!loggedIn && !goingLogin) return AppRoutes.login;
+      if (loggedIn && goingLogin) return AppRoutes.home;
       return null;
     },
     routes: [
-      GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
-      GoRoute(path: '/', builder: (_, _) => const HomePage()),
+      GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginPage()),
+      GoRoute(path: AppRoutes.home, builder: (_, _) => const HomePage()),
       GoRoute(
-        path: '/pengumuman/:id',
+        path: AppRoutes.announcement,
         builder: (_, s) => AnnouncementPage(id: s.pathParameters['id'] ?? ''),
       ),
     ],
@@ -50,24 +51,21 @@ void registerBackgroundHandler() {
 String formatTokenForDebug(String token) =>
     token.length > 12 ? '${token.substring(0, 12)}...' : token;
 
-String _routeFromMessage(RemoteMessage? message) {
-  final route = message?.data['route'];
-  return route is String && route.isNotEmpty ? route : '/';
-}
-
 void listenForeground(void Function(String route) onRoute) {
   FirebaseMessaging.onMessage.listen((message) async {
     await showForegroundNotification(message);
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    onRoute(_routeFromMessage(message));
+    onRoute(routeFromMessage(message.data));
   });
 }
 
 Future<void> handleTerminated(void Function(String route) onRoute) async {
   final message = await FirebaseMessaging.instance.getInitialMessage();
-  final route = message == null ? pendingDeepLink : _routeFromMessage(message);
+  final route = message == null
+      ? pendingDeepLink
+      : routeFromMessage(message.data);
   pendingDeepLink = null;
   if (route != null && route.isNotEmpty) onRoute(route);
 }
@@ -108,6 +106,7 @@ void main() async {
   final dio = buildApiClient(
     container.read(tokenStoreProvider),
     container.read(authRepositoryProvider),
+    onSessionExpired: () => container.invalidate(authStateProvider),
   );
 
   // 4. Inisialisasi FCM token & lifecycle

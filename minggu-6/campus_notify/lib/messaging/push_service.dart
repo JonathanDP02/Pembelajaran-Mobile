@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../routes.dart';
+
 // StateProvider untuk menyimpan token terpotong
 final fcmTokenNotifier = ValueNotifier<String>('Memuat token...');
 
@@ -80,8 +82,7 @@ Future<void> initLocalNotifications() async {
 }
 
 Future<void> showForegroundNotification(RemoteMessage message) async {
-  final route = message.data['route'];
-  final payload = route is String && route.isNotEmpty ? route : '/';
+  final payload = routeFromMessage(message.data);
 
   const androidDetails = AndroidNotificationDetails(
     'pengumuman',
