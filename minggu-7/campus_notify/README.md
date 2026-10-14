@@ -166,4 +166,9 @@ Hasil:
 
 Implementasi ini sudah mengikuti prinsip Clean Architecture feature-first, memisahkan domain/data/application/presentation dengan jelas, serta menjaga dependency direction yang sehat. Hasil akhir dokumentasi dan validasi disimpan di README ini agar mudah dipelajari dan ditinjau ulang di proses berikutnya.
 
+## Refleksi
 
+- **Mengapa interface repository di domain?** Domain menentukan kebutuhan data, sedangkan data memenuhi kontrak itu. Jika kontrak diletakkan di data, domain harus bergantung pada detail implementasi; penggantian database atau sumber data dapat memaksa perubahan domain dan membalik arah dependency.
+- **Kapan use case diperlukan?** Gunakan saat ada aturan bisnis, orkestrasi beberapa sumber, atau operasi yang dipakai lintas UI. Untuk CRUD sederhana tanpa aturan tambahan, notifier dapat memanggil repository langsung.
+- **Biaya use case satu-baris:** menambah file, navigasi, dan pemeliharaan tanpa manfaat berarti bagi tim kecil. Biaya itu sepadan jika aturan bisnis berkembang, perlu diuji/diubah terpisah, atau aplikasinya cukup besar untuk mendapat manfaat dari batas yang jelas.
+- **Usulan AI yang disederhanakan:** tidak membuat use case terpisah untuk setiap operasi CRUD sederhana. Abstraksi dipertahankan pada batas repository dan operasi yang memberi nilai sebagai aturan/use case; tujuannya menjaga keterbacaan tanpa menambah lapisan yang tidak perlu.
