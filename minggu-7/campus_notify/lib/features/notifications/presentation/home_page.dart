@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+
 import '../data/push_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -126,6 +128,15 @@ class HomePage extends StatelessWidget {
               color: Colors.blue,
               title: '3. Kirim via Firebase Console',
               subtitle: 'Tekan Home (App Background) lalu kirim notifikasi dari Console.',
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => context.go('/notes'),
+                icon: const Icon(Icons.note_alt_outlined),
+                label: const Text('Buka Catatan Kuliah'),
+              ),
             ),
           ],
         ),

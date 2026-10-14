@@ -5,6 +5,7 @@ import '../core/routes.dart';
 import '../features/announcements/presentation/announcement_page.dart';
 import '../features/auth/application/auth_provider.dart';
 import '../features/auth/presentation/login_page.dart';
+import '../features/notes/presentation/notes_page.dart';
 import '../features/notifications/presentation/home_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -21,6 +22,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginPage()),
       GoRoute(path: AppRoutes.home, builder: (_, _) => const HomePage()),
+      GoRoute(path: '/notes', builder: (_, _) => const NotesPage()),
       GoRoute(
         path: AppRoutes.announcement,
         builder: (_, state) =>
