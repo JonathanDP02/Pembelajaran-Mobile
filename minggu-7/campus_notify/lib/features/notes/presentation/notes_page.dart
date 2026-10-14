@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/notes_provider.dart';
@@ -17,12 +17,12 @@ class NotesPage extends ConsumerWidget {
         foregroundColor: Colors.white,
       ),
       body: notesState.when(
-        data: (notes) => ListView.separated(
+        data: (result) => ListView.separated(
           padding: const EdgeInsets.all(16),
-          itemCount: notes.length,
+          itemCount: result.notes.length,
           separatorBuilder: (_, _) => const SizedBox(height: 12),
           itemBuilder: (context, index) {
-            final note = notes[index];
+            final note = result.notes[index];
             return Card(
               child: ListTile(
                 leading: CircleAvatar(

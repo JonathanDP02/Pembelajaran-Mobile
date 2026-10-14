@@ -124,6 +124,44 @@ Hasil:
 - `flutter test` : berhasil, semua test lolos
 - `flutter analyze` : tidak ada issues ditemukan
 
+## Refactoring, testing, dan error umum
+
+## Checklist Verifikasi Mandiri
+
+- [x] Tiga grep sterilitas (presentation & domain) nol hasil.
+- [x] Interface di domain, implementasi di data, mapping hanya di model.
+- [x] Widget tidak menginstansiasi repository; semua lewat provider.
+- [x] Aplikasi berjalan identik sebelum/sesudah refactor (bukti screenshot).
+- [x] `flutter analyze` bersih dan semua test lulus.
+
+### Refactoring, testing, dan error umum
+
+- [x] Pola yang sama diterapkan pada fitur kedua (`announcements` dan `notes`) menggunakan entity + repository + use case + provider wiring.
+- [x] Formatting tanggal dan parsing route dipindahkan ke fungsi murni di `lib/core/format.dart` agar bisa diuji tanpa widget.
+- [x] Exception mentah dibungkus ke `Failure` yang ramah UI sebelum mencapai UI.
+- [x] Use case domain diuji dengan repository palsu tanpa SQLite, Dio, atau Firebase.
+- [x] `GetNotes` meneruskan daftar dan `failure` tanpa melempar.
+
+### Error umum dan solusinya
+
+- [x] Import cycle dicegah dengan arah dependency presentation → domain, data → domain, app/router_provider → wiring.
+- [x] Konversi model ke entity dilakukan di batas data → domain.
+- [x] Provider hanya dipasang di `Provider/Notifier`/`ConsumerWidget`.
+- [x] Testing domain selalu memakai fake repository.
+- [x] Refactor dilakukan dengan snapshot commit dan verifikasi tiap fitur.
+
+### Checklist verifikasi baru (sesuai jobsheet)
+
+- [x] Menjalankan `flutter analyze` pada project dan memastikan tidak ada error.
+- [x] Menjalankan `flutter test` dan memastikan semua test lulus.
+- [x] Membuat `test/get_notes_test.dart` dengan fake repository, tanpa SQLite, Dio, atau Firebase.
+- [x] Menggunakan `GetNotes(repo).call()` untuk memastikan data dan failure diteruskan dengan benar.
+- [x] Memastikan `Failure` digunakan agar UI menerima pesan yang ramah, bukan exception mentah.
+- [x] Mengubah routing dan formatting tanggal ke fungsi murni di `lib/core/format.dart` agar lebih mudah diuji.
+- [x] Mengecek arah dependency: `presentation -> domain`, `data -> domain`, `app/router_provider -> wiring`.
+- [x] Menjaga konsistensi pola refactor antar fitur (`notes` dan `announcements`).
+- [x] Menyimpan status verifikasi pada README tanpa menghapus isi sebelumnya.
+
 ## Kesimpulan
 
 Implementasi ini sudah mengikuti prinsip Clean Architecture feature-first, memisahkan domain/data/application/presentation dengan jelas, serta menjaga dependency direction yang sehat. Hasil akhir dokumentasi dan validasi disimpan di README ini agar mudah dipelajari dan ditinjau ulang di proses berikutnya.
