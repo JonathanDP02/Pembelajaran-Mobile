@@ -44,9 +44,17 @@ class LocalNotesRepository implements NoteRepository {
     required String title,
     String body = '',
   }) async {
+    final normalizedTitle = title.trim();
+    if (normalizedTitle.isEmpty) {
+      return (
+        note: null,
+        failure: const LocalFailure('Judul catatan tidak boleh kosong.'),
+      );
+    }
+
     final note = Note(
       id: DateTime.now().millisecondsSinceEpoch,
-      title: title,
+      title: normalizedTitle,
       body: body,
       updatedAt: DateTime.now(),
     );
