@@ -1,0 +1,49 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/flutter-ci.yml'
+      - 'minggu-13/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/flutter-ci.yml'
+      - 'minggu-13/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: minggu-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: flutter analyze --fatal-infos
+      - run: flutter test --coverage
+      - run: flutter build apk --release
+      - run: flutter build appbundle --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-builds
+          path: |
+            minggu-13/build/app/outputs/flutter-apk/app-release.apk
+            minggu-13/build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 7
